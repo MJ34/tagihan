@@ -40,8 +40,9 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('logout', function () {
-    Auth::user()->logout();
-});
+    Auth::logout();
+    return redirect('/login');
+})->name('logout');
 
 
 
