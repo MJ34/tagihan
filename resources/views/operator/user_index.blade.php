@@ -6,6 +6,7 @@
             <div class="card">
                 <h5 class="card-header">Data User</h5>
                 <div class="card-body">
+                <a href="{{ route('user.create') }}" class="btn btn-primary btn-sm">Tambah Data</a>
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
