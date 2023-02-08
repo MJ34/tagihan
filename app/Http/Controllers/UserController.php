@@ -7,6 +7,13 @@ use \App\Models\User as Model;
 
 class UserController extends Controller
 {
+    private $viewIndex = 'user_index';
+    private $viewCreate = 'user_form';
+    private $viewEdit = 'user_form';
+    private $viewShow = 'user_show';
+    private $routePrefix = 'user';
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('operator.user_index', [
+        return view('operator.' . $this->viewIndex, [
             'models' => Model::where('akses', '<>', 'wali')
                 ->latest()
                 ->paginate(50)
@@ -82,7 +89,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $data = [
-            'model' =>  \App\Models\User::findOrFail($id),
+            'model' =>  Model::findOrFail($id),
             'method' => 'PUT',
             'route' => ['user.update', $id],
             'button' => 'UPDATE'
