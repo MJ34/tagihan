@@ -6,8 +6,15 @@ use App\Models\Siswa;
 use App\Http\Requests\StoreSiswaRequest;
 use App\Http\Requests\UpdateSiswaRequest;
 
+use \App\Models\User as Model;
+
 class SiswaController extends Controller
 {
+    private $viewIndex = 'siswa_index';
+    private $viewCreate = 'siswa_form';
+    private $viewEdit = 'siswa_form';
+    private $viewShow = 'siswa_show';
+    private $routePrefix = 'siswa';
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +22,12 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        //
+        return view('operator.' . $this->viewIndex, [
+            'models' => Siswa::latest()
+                ->paginate(50),
+                'routePrefix' => $this->routePrefix,
+                'title' => 'Data Siswa'
+        ]);
     }
 
     /**
@@ -25,7 +37,14 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'model' => new Siswa(),
+            'method' => 'POST',
+            'route' => $this->routePrefix. '.store',
+            'button' => 'SIMPAN',
+            'title' => 'FORM DATA WALI MURID'
+        ];
+        return view('operator.user_form', $data);
     }
 
     /**
@@ -36,7 +55,18 @@ class SiswaController extends Controller
      */
     public function store(StoreSiswaRequest $request)
     {
-        //
+        $requestData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'nohp' => 'required|unique:users',
+            'password' => 'required'
+        ]);
+        $requestData['password'] = bcrypt($requestData['password']);
+        $requestData['nohp_verified_at'] = now();
+        $requestData['akses'] = 'wali';
+        Siswa::create($requestData);
+        flash('Data berhasil disimpan');
+        return back();
     }
 
     /**
