@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <h5 class="card-header">Form User</h5>
+                <h5 class="card-header">{{ $title }}</h5>
                 <div class="card-body">
                     {!! Form::model($model, ['route' => $route, 'method' => $method]) !!}
                     <div class="form-group">
@@ -22,6 +22,7 @@
                         {!! Form::text('nohp', null, ['class' => 'form-control']) !!}
                         <span class="text-danger">{{ $errors->first('nohp') }}</span>
                     </div>
+                    @if (\Route::is('user.create'))
                     <div class="form-group mt-3">
                         <label for="akses">Hak Akses</label>
                         {!! Form::select(
@@ -29,12 +30,14 @@
                             [
                                 'operator' => 'Operator Sekolah',
                                 'admin' => 'Administrator',
+                                'wali' => 'Wali Murid',
                             ],
                             null,
                             ['class' => 'form-control'],
                         ) !!}
                         <span class="text-danger">{{ $errors->first('akses') }}</span>
                     </div>
+                    @endif
                     <div class="form-group mt-3">
                         <label for="password">Password</label>
                         {!! Form::password('password', ['class' => 'form-control']) !!}

@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use \App\Models\User as Model;
 
-class UserController extends Controller
+class WaliController extends Controller
 {
     private $viewIndex = 'user_index';
     private $viewCreate = 'user_form';
     private $viewEdit = 'user_form';
     private $viewShow = 'user_show';
-    private $routePrefix = 'user';
+    private $routePrefix = 'wali';
 
 
     /**
@@ -22,11 +22,11 @@ class UserController extends Controller
     public function index()
     {
         return view('operator.' . $this->viewIndex, [
-            'models' => Model::where('akses', '<>', 'wali')
+            'models' => Model::where('akses', 'wali')
                 ->latest()
                 ->paginate(50),
                 'routePrefix' => $this->routePrefix,
-                'title' => 'Data User'
+                'title' => 'Data Wali'
         ]);
 
 
@@ -42,9 +42,9 @@ class UserController extends Controller
         $data = [
             'model' => new Model(),
             'method' => 'POST',
-            'route' => 'user.store',
+            'route' => $this->routePrefix. '.store',
             'button' => 'SIMPAN',
-            'title' => 'FORM DATA USER'
+            'title' => 'FORM DATA WALI MURID'
         ];
         return view('operator.user_form', $data);
     }
@@ -61,12 +61,11 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users',
             'nohp' => 'required|unique:users',
-            'akses' => 'required|in:operator,admin,wali',
             'password' => 'required'
         ]);
         $requestData['password'] = bcrypt($requestData['password']);
-        $requestData['email_verified_at'] = now();
         $requestData['nohp_verified_at'] = now();
+        $requestData['akses'] = 'wali';
         Model::create($requestData);
         flash('Data berhasil disimpan');
         return back();
@@ -94,9 +93,9 @@ class UserController extends Controller
         $data = [
             'model' =>  Model::findOrFail($id),
             'method' => 'PUT',
-            'route' => ['user.update', $id],
+            'route' => ['wali.update', $id],
             'button' => 'UPDATE',
-            'title' => 'EDIT DATA USER'
+            'title' => 'EDIT DATA WALI MURID'
         ];
         return view('operator.user_form', $data);
     }
@@ -114,7 +113,6 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|unique:users,email,' . $id,
             'nohp' => 'required|unique:users,nohp,'  . $id,
-            'akses' => 'required|in:operator,admin,wali',
             'password' => 'nullable'
         ]);
         $model = Model::findOrFail($id);
@@ -126,7 +124,7 @@ class UserController extends Controller
         $model->fill($requestData);
         $model->save();
         flash('Data berhasil diupdate');
-        return redirect()->route('user.index');
+        return redirect()->route('wali.index');
     }
 
     /**
@@ -137,12 +135,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $model = Model::findOrFail($id);
-        if ($model->id == 3) {
-            flash('Data tidak bisa dihapus')->error();
-            return back();
-        }
-
+        $model = Model::where('akses', 'wali')->firstOrFail();
         $model->delete();
         flash('Data berhasil dihapus');
         return back();
