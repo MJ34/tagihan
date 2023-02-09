@@ -58,6 +58,9 @@
     <!-- Page fontawesome-->
     <link rel="stylesheet" href="{{ asset('fontawesome-free-6.3.0-web/css/all.css') }}">
 
+    <!-- Select-2-->
+    <link rel="stylesheet" href="{{ asset('css/select2.min.css') }}">
+
     <!-- Helpers -->
     <script src="{{ asset('sneat') }}/assets/vendor/js/helpers.js"></script>
 
@@ -368,6 +371,15 @@
 
     <!-- Page JS -->
     <script src="{{ asset('sneat') }}/assets/js/dashboards-analytics.js"></script>
+
+    <!-- Select-2 JS -->
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
