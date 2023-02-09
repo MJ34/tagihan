@@ -7,6 +7,7 @@ use App\Http\Requests\StoreSiswaRequest;
 use App\Http\Requests\UpdateSiswaRequest;
 
 use \App\Models\User as Model;
+use App\Models\User;
 
 class SiswaController extends Controller
 {
@@ -42,9 +43,10 @@ class SiswaController extends Controller
             'method' => 'POST',
             'route' => $this->routePrefix. '.store',
             'button' => 'SIMPAN',
-            'title' => 'FORM DATA WALI MURID'
+            'title' => 'FORM DATA SISWA',
+            'wali' => User::where('akses', 'wali')->pluck('name', 'id')
         ];
-        return view('operator.user_form', $data);
+        return view('operator.siswa_form', $data);
     }
 
     /**
