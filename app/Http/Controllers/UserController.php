@@ -137,9 +137,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $model = Model::findOrFail($id);
-        if ($model->id == 3) {
-            flash('Data tidak bisa dihapus')->error();
+        $model = Model::find($id);
+
+        if ($model->email == 'sella@gmail.com') {
+            flash('Data tidak bisa dihapus, karena data Administrator')->error();
             return back();
         }
 

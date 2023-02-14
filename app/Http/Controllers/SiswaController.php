@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Siswa;
-use App\Http\Requests\StoreSiswaRequest;
-use App\Http\Requests\UpdateSiswaRequest;
-
-use \App\Models\User as Model;
+use Illuminate\Http\Request;
+use App\Models\Siswa as Model;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 
 class SiswaController extends Controller
 {
@@ -16,103 +14,119 @@ class SiswaController extends Controller
     private $viewEdit = 'siswa_form';
     private $viewShow = 'siswa_show';
     private $routePrefix = 'siswa';
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    private $accessClass = 'Data Siswa';
+
+    public function index(Request $request)
     {
         return view('operator.' . $this->viewIndex, [
-            'models' => Siswa::latest()
+            'models' => Model::latest()
                 ->paginate(50),
-                'routePrefix' => $this->routePrefix,
-                'title' => 'Data Siswa'
+            'routePrefix' => $this->routePrefix,
+            'title' => $this->accessClass
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $data = [
-            'model' => new Siswa(),
+            'model' => new Model(),
             'method' => 'POST',
-            'route' => $this->routePrefix. '.store',
+            'route' => $this->routePrefix . '.store',
             'button' => 'SIMPAN',
-            'title' => 'FORM DATA SISWA',
+            'title' => 'Tambah ' . $this->accessClass,
             'wali' => User::where('akses', 'wali')->pluck('name', 'id')
         ];
-        return view('operator.siswa_form', $data);
+        return view('operator.' . $this->viewCreate, $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreSiswaRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreSiswaRequest $request)
+    public function store(Request $request)
     {
         $requestData = $request->validate([
-            'name' => 'required',
-            'email' => 'required|unique:users',
-            'nohp' => 'required|unique:users',
-            'password' => 'required'
+            'wali_id' => 'nullable',
+            'nama' => 'required',
+            'nisn' => 'required|unique:siswas',
+            'jurusan' => 'required',
+            'kelas' => 'required',
+            'angkatan' => 'required',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:5000'
         ]);
-        $requestData['password'] = bcrypt($requestData['password']);
-        $requestData['nohp_verified_at'] = now();
-        $requestData['akses'] = 'wali';
-        Siswa::create($requestData);
+
+        if ($request->hasFile('foto')) {
+            $requestData['foto'] = $request->file('foto')->store('public');
+        }
+
+        $requestData['user_id'] = auth()->user()->id;
+
+        if ($request->filled('wali_id')) {
+            $requestData['wali_status'] = 'ok';
+        }
+
+        Model::create($requestData);
         flash('Data berhasil disimpan');
+        return redirect()->route($this->routePrefix . '.index');
+    }
+
+    public function show($id)
+    {
+        return view('operator.' . $this->viewShow, [
+            'model' => Model::find($id),
+            'title' => 'Detail Siswa'
+        ]);
+    }
+
+    public function edit($id)
+    {
+        $data = [
+            'model' => Model::findOrFail($id),
+            'method' => 'PUT',
+            'route' => [$this->routePrefix . '.update', $id],
+            'button' => 'UPDATE',
+            'title' => 'Ubah ' . $this->accessClass,
+            'wali' => User::where('akses', 'wali')->pluck('name', 'id')
+        ];
+
+        return view('operator.' . $this->viewEdit, $data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $requestData = $request->validate([
+            'wali_id' => 'nullable',
+            'nama' => 'required',
+            'nisn' => 'required|unique:siswas,nisn,' . $id,
+            'jurusan' => 'required',
+            'kelas' => 'required',
+            'angkatan' => 'required',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:5000'
+        ]);
+
+        $model = Model::find($id);
+
+        if ($request->hasFile('foto')) {
+            !is_null($model->foto) && Storage::delete($model->foto);
+            $requestData['foto'] = $request->file('foto')->store('public');
+        }
+
+        $requestData['user_id'] = auth()->user()->id;
+
+        if ($request->filled('wali_id')) {
+            $requestData['wali_status'] = 'ok';
+        }
+
+        $model->fill($requestData);
+        $model->save();
+
+        flash('Data berhasil diupdate');
+        return redirect()->route($this->routePrefix . '.index');
+    }
+
+    public function destroy($id)
+    {
+        $model = Model::find($id);
+        Storage::delete($model->foto);
+        $model->delete();
+        flash('Data berhasil dihapus');
         return back();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Siswa  $siswa
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Siswa $siswa)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Siswa  $siswa
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Siswa $siswa)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateSiswaRequest  $request
-     * @param  \App\Models\Siswa  $siswa
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateSiswaRequest $request, Siswa $siswa)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Siswa  $siswa
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Siswa $siswa)
-    {
-        //
     }
 }
