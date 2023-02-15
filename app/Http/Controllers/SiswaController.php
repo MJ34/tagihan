@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SiswaStoreRequest;
+use App\Http\Requests\SiswaUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Siswa as Model;
 use App\Models\User;
@@ -19,9 +21,14 @@ class SiswaController extends Controller
 
     public function index(Request $request)
     {
+        if  ($request->filled('q')) {
+            $models = Model::search($request->q)->paginate(10);
+        } else {
+            $models = Model::latest()->paginate(10);
+        }
+
         return view('operator.' . $this->viewIndex, [
-            'models' => Model::latest()
-                ->paginate(50),
+            'models' => $models,
             'routePrefix' => $this->routePrefix,
             'title' => $this->accessClass
         ]);
@@ -71,7 +78,8 @@ class SiswaController extends Controller
     {
         return view('operator.' . $this->viewShow, [
             'model' => Model::find($id),
-            'title' => 'Detail Siswa'
+            'title' => 'Detail Siswa',
+            'access_menu' => $this->accessClass
         ]);
     }
 
