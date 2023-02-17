@@ -6,7 +6,7 @@
             <div class="card">
                 <h5 class="card-header">{{ $title }}</h5>
                 <div class="card-body">
-                    <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary btn-sm mb-4">Tambah Data</a>
+                    <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary btn-sm mb-4"><i class="fa fa-add"></i>&emsp;Tambah {{ $title }}</a>
                     {!! Form::open(['route' => $routePrefix . '.index', 'method' => 'GET']) !!}
                         <div class="input-group">
                             <input name="q" type="text" class="form-control" placeholder="Cari Nama Siswa" aria-label="nama siswa" aria-describedby="button-addon2" value="{{ request('q') }}">
@@ -14,12 +14,12 @@
                         </div>
                     {!! Form::close() !!}
                     <div class="table-responsive">
-                        <table class="table table-striped">
+                        <table class="table table-striped mb-4">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Wali Murid</th>
                                     <th>Nama</th>
+                                    <th>Nama Wali Murid</th>
                                     <th>NISN</th>
                                     <th>Jurusan</th>
                                     <th>Kelas</th>
@@ -31,13 +31,17 @@
                                 @forelse ($models as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->wali->name }}</td>
                                         <td>{{ $item->nama }}</td>
+                                        @if ($item->wali->name == "Belum ada wali murid")
+                                            <td style="color: red"><b>{{ $item->wali->name }}</b></td>
+                                        @else
+                                            <td>{{ $item->wali->name }}</td>
+                                        @endif
                                         <td>{{ $item->nisn }}</td>
                                         <td>{{ $item->jurusan }}</td>
                                         <td>{{ $item->kelas }}</td>
                                         <td>{{ $item->angkatan . '/' . $item->angkatan + 1 }}</td>
-                                        <td>
+                                        <td style="text-align:center">
                                             {!! Form::open([
                                                 'route' => [$routePrefix . '.destroy', $item->id],
                                                 'method' => 'DELETE',

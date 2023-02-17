@@ -12,6 +12,7 @@ class WaliController extends Controller
     private $viewEdit = 'user_form';
     private $viewShow = 'user_show';
     private $routePrefix = 'wali';
+    private $accessClass = 'Wali Murid';
 
 
     /**
@@ -79,7 +80,11 @@ class WaliController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('operator.' . $this->viewShow, [
+            'model' => Model::find($id),
+            'title' => 'Detail Data Wali Murid',
+            'access_menu' => $this->accessClass
+        ]);
     }
 
     /**

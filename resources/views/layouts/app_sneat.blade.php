@@ -153,21 +153,21 @@
 
             <li class="menu-item {{ \Route::is('user.*') ? 'active' : '' }}">
                 <a href="{{ route('user.index') }}" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-collection"></i>
+                  <i class="menu-icon tf-icons bx bx-user"></i>
                   <div data-i18n="Basic">Data User</div>
                 </a>
               </li>
 
               <li class="menu-item {{ \Route::is('wali.*') ? 'active' : '' }}">
                 <a href="{{ route('wali.index') }}" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-collection"></i>
+                    <i class="menu-icon tf-icons bx bx-user"></i>
                   <div data-i18n="Basic">Data Wali Murid</div>
                 </a>
               </li>
 
               <li class="menu-item {{ \Route::is('siswa.*') ? 'active' : '' }}">
                 <a href="{{ route('siswa.index') }}" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-collection"></i>
+                    <i class="menu-icon tf-icons bx bx-user"></i>
                   <div data-i18n="Basic">Data Siswa</div>
                 </a>
               </li>
@@ -310,7 +310,7 @@
                   , made with ❤️ by
                   <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a>
                 </div>
-                <div>
+                {{-- <div>
                   <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
                   <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
 
@@ -327,7 +327,7 @@
                     class="footer-link me-4"
                     >Support</a
                   >
-                </div>
+                </div> --}}
               </div>
             </footer>
             <!-- / Footer -->
@@ -344,14 +344,14 @@
     </div>
     <!-- / Layout wrapper -->
 
-    <div class="buy-now">
+    {{-- <div class="buy-now">
       <a
         href="https://themeselection.com/products/sneat-bootstrap-html-admin-template/"
         target="_blank"
         class="btn btn-danger btn-buy-now"
         >Upgrade to Pro</a
       >
-    </div>
+    </div> --}}
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->

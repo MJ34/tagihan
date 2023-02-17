@@ -36,6 +36,8 @@
                                             <a href="{{ route($routePrefix. '.edit', $item->id) }}" class="btn btn-warning btn-sm">
                                                 <i class="fa fa-edit"></i> Edit
                                             </a>
+                                            <a href="{{ route($routePrefix . '.show', $item->id) }}" class="btn btn-info btn-sm"><i class="fa fa-user"></i>&emsp;Details</a>
+                                            &nbsp;
                                             {!! Form::submit('Hapus', ['class' => 'btn btn-danger btn-sm'
                                             ]) !!}
                                             {!! Form::close() !!}
