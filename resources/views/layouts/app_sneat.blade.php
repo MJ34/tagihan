@@ -153,7 +153,7 @@
 
             <li class="menu-item {{ \Route::is('user.*') ? 'active' : '' }}">
                 <a href="{{ route('user.index') }}" class="menu-link">
-                  <i class="menu-icon tf-icons bx bx-user"></i>
+                  <i class="menu-icon tf-icons bx bx-user-circle"></i>
                   <div data-i18n="Basic">Data User</div>
                 </a>
               </li>
@@ -167,7 +167,7 @@
 
               <li class="menu-item {{ \Route::is('siswa.*') ? 'active' : '' }}">
                 <a href="{{ route('siswa.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-user"></i>
+                    <i class="menu-icon tf-icons bx bx-book-reader"></i>
                   <div data-i18n="Basic">Data Siswa</div>
                 </a>
               </li>
@@ -214,7 +214,7 @@
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
-                <li class="nav-item lh-1 me-3">
+                {{-- <li class="nav-item lh-1 me-3">
                   <a
                     class="github-button"
                     href="https://github.com/themeselection/sneat-html-admin-template-free"
@@ -224,13 +224,13 @@
                     aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
                     >Star</a
                   >
-                </li>
+                </li> --}}
 
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="{{ asset('sneat') }}/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="{{ asset('sneat') }}/assets/img/avatars/default_picture.png" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -239,7 +239,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="{{ asset('sneat') }}/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="{{ asset('sneat') }}/assets/img/avatars/default_picture.png" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">

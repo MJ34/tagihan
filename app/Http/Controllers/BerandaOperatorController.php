@@ -8,6 +8,8 @@ class BerandaOperatorController extends Controller
 {
     public function index()
     {
-        return view('operator.beranda_index');
+        return view('operator.beranda_index', [
+            'title' => 'Hi, ' . auth()->user()->name
+        ]);
     }
 }

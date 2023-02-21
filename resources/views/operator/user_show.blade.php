@@ -51,6 +51,16 @@
                     </div>
                 </div>
 
+                <h4 class="my-3">TAMBAH DATA ANAK</h4>
+                {!! Form::open(['route' => 'walisiswa.store', 'method' => 'POST']) !!}
+                <div class="form-group">
+                    <label for="siswa_id">Pilih Data Siswa</label>
+                    {!! Form::select('siswa_id', $siswa, null, ['class' => 'form-control select2']) !!}
+                    <span class="text-danger">{{ $errors->first('siswa_id') }}</span>
+                </div>
+                {!! Form::submit('SIMPAN', ['class' => 'btn btn-primary my-2']) !!}
+                {!! Form::close() !!}
+
                 @if ($model->akses == 'operator' || $model->akses == 'admin')
                     {{-- Tidak memunculkan data anak sebab Operator --}}
                 @else

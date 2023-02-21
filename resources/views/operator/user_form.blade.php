@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="row justify-content-center">
+        <h4 class="fw-bold py-1 mb-4"><span class="text-muted fw-light"> {{ $access_menu }} / </span>{{ $title }}</h4>
         <div class="col-md-12">
             <div class="card">
-                <h5 class="card-header">{{ $title }}</h5>
                 <div class="card-body">
                     {!! Form::model($model, ['route' => $route, 'method' => $method]) !!}
                     <div class="form-group">
@@ -23,20 +23,20 @@
                         <span class="text-danger">{{ $errors->first('nohp') }}</span>
                     </div>
                     @if (\Route::is('user.create'))
-                    <div class="form-group mt-3">
-                        <label for="akses">Hak Akses</label>
-                        {!! Form::select(
-                            'akses',
-                            [
-                                'operator' => 'Operator Sekolah',
-                                'admin' => 'Administrator',
-                                'wali' => 'Wali Murid',
-                            ],
-                            null,
-                            ['class' => 'form-control'],
-                        ) !!}
-                        <span class="text-danger">{{ $errors->first('akses') }}</span>
-                    </div>
+                        <div class="form-group mt-3">
+                            <label for="akses">Hak Akses</label>
+                            {!! Form::select(
+                                'akses',
+                                [
+                                    'operator' => 'Operator Sekolah',
+                                    'admin' => 'Administrator',
+                                    'wali' => 'Wali Murid',
+                                ],
+                                null,
+                                ['class' => 'form-control'],
+                            ) !!}
+                            <span class="text-danger">{{ $errors->first('akses') }}</span>
+                        </div>
                     @endif
                     <div class="form-group mt-3">
                         <label for="password">Password</label>

@@ -23,7 +23,7 @@ class WaliController extends Controller
     public function index()
     {
         return view('operator.' . $this->viewIndex, [
-            'models' => Model::where('akses', 'wali')
+            'models' => Model::wali()->where('akses', '<>', '-')
                 ->latest()
                 ->paginate(50),
                 'routePrefix' => $this->routePrefix,
@@ -81,7 +81,8 @@ class WaliController extends Controller
     public function show($id)
     {
         return view('operator.' . $this->viewShow, [
-            'model' => Model::find($id),
+            'siswa' => \App\Models\Siswa::pluck('nama', 'id'),
+            'model' => Model::wali()->where('id', $id)->firstOrFail(),
             'title' => 'Detail Data Wali Murid',
             'access_menu' => $this->accessClass
         ]);

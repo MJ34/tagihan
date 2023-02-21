@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="row justify-content-center">
+        <h4 class="fw-bold py-1 mb-4">{{ $title }}</h4>
         <div class="col-md-12">
             <div class="card">
-                <h5 class="card-header">{{ $title }}</h5>
                 <div class="card-body">
                     <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary btn-sm mb-4"><i class="fa fa-add"></i>&emsp;Tambah {{ $title }}</a>
                     {!! Form::open(['route' => $routePrefix . '.index', 'method' => 'GET']) !!}
