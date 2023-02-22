@@ -87,7 +87,7 @@
                                                 <td>{{ $item->nama }}</td>
                                                 <td style="text-align: center">{{ $item->nisn }}</td>
                                                 <td style="text-align: center">{{ $item->kelas }}</td>
-                                                <td>
+                                                <td style="text-align: center">
                                                     {!! Form::open([
                                                         'route' => ['walisiswa.update', $item->id],
                                                         'method' => 'PUT',

@@ -82,7 +82,7 @@ class WaliController extends Controller
     {
         return view('operator.' . $this->viewShow, [
             'siswa' => \App\Models\Siswa::whereNotIn('wali_id', [$id])->pluck('nama', 'id'),
-            'model' => Model::wali()->where('id', $id)->firstOrFail(),
+            'model' => Model::with('siswa')->wali()->where('id', $id)->firstOrFail(),
             'title' => 'Detail Data Wali Murid',
             'access_menu' => $this->accessClass
         ]);
