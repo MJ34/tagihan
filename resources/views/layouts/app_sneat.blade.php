@@ -295,6 +295,13 @@
           <div class="content-wrapper">
 
             <div class="container-xxl flex-grow-1 container-p-y">
+
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    {!! implode('', $errors->all('<div>:message</div>')) !!}
+                </div>
+                @endif
+
                 @include('flash::message')
                 @yield('content')
             </div>

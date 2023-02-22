@@ -53,6 +53,7 @@
 
                 <h4 class="my-3">TAMBAH DATA ANAK</h4>
                 {!! Form::open(['route' => 'walisiswa.store', 'method' => 'POST']) !!}
+                {!! Form::hidden('wali_id', $model->id, []) !!}
                 <div class="form-group">
                     <label for="siswa_id">Pilih Data Siswa</label>
                     {!! Form::select('siswa_id', $siswa, null, ['class' => 'form-control select2']) !!}
@@ -76,6 +77,7 @@
                                             <th>Nama Siswa</th>
                                             <th style="text-align: center">NISN</th>
                                             <th style="text-align: center">Kelas</th>
+                                            <th style="text-align: center">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -85,6 +87,18 @@
                                                 <td>{{ $item->nama }}</td>
                                                 <td style="text-align: center">{{ $item->nisn }}</td>
                                                 <td style="text-align: center">{{ $item->kelas }}</td>
+                                                <td>
+                                                    {!! Form::open([
+                                                        'route' => ['walisiswa.update', $item->id],
+                                                        'method' => 'PUT',
+                                                        'onsubmit' => 'return confirm("Yakin ingin menghapus data ini?")',
+                                                    ]) !!}
+
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        <i class="fa fa-trash"></i> Hapus
+                                                    </button>
+                                                    {!! Form::close() !!}
+                                                </td>
                                             </tr>
                                             @empty
                                             <tr>
