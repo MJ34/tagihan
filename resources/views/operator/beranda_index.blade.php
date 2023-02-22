@@ -4,7 +4,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <h5 class="card-header">Hai, Operator</h5>
+                <h5 class="card-header">{{ $title }}</h5>
 
                 <div class="card-body">
                     @if (session('status'))
