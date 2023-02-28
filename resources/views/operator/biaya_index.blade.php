@@ -29,7 +29,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->nama }}</td>
-                                        <td>{{ formatRupiah($item->jumlah, 'IDR. ') }}</td>
+                                        <td>{{ $item->formatRupiah('jumlah') }}</td>
                                         <td>{{ $item->user->name }}</td>
                                         <td style="text-align:center">
                                             {!! Form::open([
