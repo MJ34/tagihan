@@ -28,4 +28,11 @@ class UpdateBiayaRequest extends FormRequest
             'jumlah' => 'required',
         ];
     }
+
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'jumlah' => str_replace(' ', '', $this->jumlah),
+        ]);
+    }
 }
