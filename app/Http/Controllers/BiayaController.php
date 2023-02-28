@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Biaya;
 use App\Http\Requests\StoreBiayaRequest;
 use App\Http\Requests\UpdateBiayaRequest;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class BiayaController extends Controller
@@ -14,10 +16,21 @@ class BiayaController extends Controller
     private $viewEdit = 'biaya_form';
     private $viewShow = 'biaya_show';
     private $routePrefix = 'biaya';
+    private $accessClass = 'Data Biaya';
 
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if  ($request->filled('q')) {
+            $models = Biaya::with('user')->search($request->q)->paginate(10);
+        } else {
+            $models = Biaya::with('user')->latest()->paginate(10);
+        }
+
+        return view('operator.' . $this->viewIndex, [
+            'models' => $models,
+            'routePrefix' => $this->routePrefix,
+            'title' => $this->accessClass
+        ]);
     }
 
     /**
@@ -27,7 +40,15 @@ class BiayaController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'model' => new Biaya(),
+            'method' => 'POST',
+            'route' => $this->routePrefix . '.store',
+            'button' => 'SIMPAN',
+            'title' => 'FORM DATA BIAYA',
+
+        ];
+        return view('operator.' . $this->viewCreate, $data);
     }
 
     /**
@@ -38,7 +59,11 @@ class BiayaController extends Controller
      */
     public function store(StoreBiayaRequest $request)
     {
-        //
+        $requestData = $request->validated();
+        $requestData['user_id'] = auth()->user()->id;
+        Biaya::create($requestData);
+        flash('Data berhasil disimpan', 'success');
+        return back();
     }
 
     /**
@@ -58,9 +83,17 @@ class BiayaController extends Controller
      * @param  \App\Models\Biaya  $biaya
      * @return \Illuminate\Http\Response
      */
-    public function edit(Biaya $biaya)
+    public function edit($id)
     {
-        //
+        $data = [
+            'model' => Biaya::findOrFail($id),
+            'method' => 'PUT',
+            'route' => [$this->routePrefix . '.update', $id],
+            'button' => 'UPDATE',
+            'title' => 'Ubah ' . $this->accessClass,
+        ];
+
+        return view('operator.' . $this->viewEdit, $data);
     }
 
     /**
@@ -70,9 +103,16 @@ class BiayaController extends Controller
      * @param  \App\Models\Biaya  $biaya
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBiayaRequest $request, Biaya $biaya)
+    public function update(UpdateBiayaRequest $request, $id)
     {
-        //
+        $requestData = $request->validated();
+        $model = Biaya::findOrFail($id);
+        $requestData['user_id'] = auth()->user()->id;
+        $model->fill($requestData);
+        $model->save();
+
+        flash('Data berhasil diupdate');
+        return redirect()->route($this->routePrefix . '.index');
     }
 
     /**
@@ -81,8 +121,11 @@ class BiayaController extends Controller
      * @param  \App\Models\Biaya  $biaya
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Biaya $biaya)
+    public function destroy($id)
     {
-        //
+        $model = Biaya::find($id);
+        $model->delete();
+        flash('Data berhasil dihapus');
+        return back();
     }
 }
