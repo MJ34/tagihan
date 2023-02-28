@@ -14,7 +14,7 @@
                     </div>
                     <div class="form-group mt-3">
                         <lable for="jumlah">Jumlah / Nominal</lable>
-                        {!! Form::text('jumlah', null, ['class' => 'form-control', 'autofocus']) !!}
+                        {!! Form::text('jumlah', null, ['class' => 'form-control rupiah']) !!}
                         <span class="text-danger">{{ $errors->first('jumlah') }}</span>
                     </div>
 

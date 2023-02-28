@@ -304,10 +304,10 @@
             <div class="container-xxl flex-grow-1 container-p-y">
 
                 @if ($errors->any())
-                <div class="alert alert-danger">
+<div class="alert alert-danger">
                     {!! implode('', $errors->all('<div>:message</div>')) !!}
                 </div>
-                @endif
+@endif
 
                 @include('flash::message')
                 @yield('content')
@@ -388,9 +388,13 @@
 
     <!-- Select-2 JS -->
     <script src="{{ asset('js/select2.min.js') }}"></script>
-
+    <!-- jquery.mask.min JS -->
+    <script src="{{ asset('js/jquery.mask.min.js') }}"></script>
     <script>
         $(document).ready(function() {
+            $('.rupiah').mask("#.##0", {
+                reverse: true
+            });
             $('.select2').select2();
         });
     </script>
