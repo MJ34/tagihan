@@ -25,7 +25,7 @@ class UpdateBiayaRequest extends FormRequest
     {
         return [
             'nama' => 'required|unique:biayas,nama,' . $this->biaya,
-            'jumlah' => 'required',
+            'jumlah' => 'required|numeric',
         ];
     }
 

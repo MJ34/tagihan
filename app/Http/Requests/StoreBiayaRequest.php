@@ -25,7 +25,7 @@ class StoreBiayaRequest extends FormRequest
     {
         return [
             'nama' => 'required|unique:biayas,nama',
-            'jumlah' => 'required',
+            'jumlah' => 'required|numeric',
         ];
     }
 
