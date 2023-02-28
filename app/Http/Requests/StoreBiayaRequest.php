@@ -32,7 +32,7 @@ class StoreBiayaRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'jumlah' => str_replace(' ', '', $this->jumlah),
+            'jumlah' => str_replace('.', '', $this->jumlah),
         ]);
     }
 }

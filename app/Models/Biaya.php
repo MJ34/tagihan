@@ -22,4 +22,15 @@ class Biaya extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    protected static function booted()
+    {
+        static::creating(function ($biaya) {
+            $biaya->user_id = auth()->user()->id;
+        });
+
+        static::updating(function ($biaya) {
+            $biaya->user_id = auth()->user()->id;
+        });
+    }
 }

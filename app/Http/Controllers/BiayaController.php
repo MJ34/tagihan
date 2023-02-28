@@ -14,7 +14,6 @@ class BiayaController extends Controller
     private $viewIndex = 'biaya_index';
     private $viewCreate = 'biaya_form';
     private $viewEdit = 'biaya_form';
-    private $viewShow = 'biaya_show';
     private $routePrefix = 'biaya';
     private $accessClass = 'Data Biaya';
 
@@ -59,9 +58,7 @@ class BiayaController extends Controller
      */
     public function store(StoreBiayaRequest $request)
     {
-        $requestData = $request->validated();
-        $requestData['user_id'] = auth()->user()->id;
-        Biaya::create($requestData);
+        Biaya::create($request->validated());
         flash('Data berhasil disimpan', 'success');
         return back();
     }
@@ -105,10 +102,8 @@ class BiayaController extends Controller
      */
     public function update(UpdateBiayaRequest $request, $id)
     {
-        $requestData = $request->validated();
         $model = Biaya::findOrFail($id);
-        $requestData['user_id'] = auth()->user()->id;
-        $model->fill($requestData);
+        $model->fill($request->validated());
         $model->save();
 
         flash('Data berhasil diupdate');
