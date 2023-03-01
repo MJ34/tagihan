@@ -6,7 +6,9 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary btn-sm"><i class="fa fa-add"></i>&emsp;Tambah {{ $title }}</a>                    <div class="table-responsive">
+                    <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary btn-sm"><i
+                            class="fa fa-add"></i>&emsp;Tambah {{ $title }}</a>
+                    <div class="table-responsive">
                         <table class="table table-striped mt-3">
                             <thead>
                                 <tr>
