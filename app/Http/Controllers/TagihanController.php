@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTagihanRequest;
 use App\Http\Requests\UpdateTagihanRequest;
 use App\Models\Biaya;
 use App\Models\Siswa;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TagihanController extends Controller
@@ -23,7 +24,7 @@ class TagihanController extends Controller
      */
     public function index(Request $request)
     {
-        if  ($request->filled('q')) {
+        if ($request->filled('q')) {
             $models = Tagihan::with('user', 'siswa')->search($request->q)->paginate(10);
         } else {
             $models = Tagihan::with('user', 'siswa')->latest()->paginate(10);
@@ -94,9 +95,22 @@ class TagihanController extends Controller
                     'keterangan' => $requestData['keterangan'],
                     'status' => 'baru'
                 ];
-                dd($dataTagihan);
+                $tanggalJatuhTempo = Carbon::parse($requestData['tanggal_jatuh_tempo']);
+                $tanggalTagihan = Carbon::parse($requestData['tanggal_tagihan']);
+                $bulanTagihan = $tanggalTagihan->format('m');
+                $tahunTagihan = $tanggalTagihan->format('Y');
+                $cekTagihan = Tagihan::where('siswa_id', $itemSiswa->id)
+                    ->where('nama_biaya', $itemBiaya->nama)
+                    ->whereMonth('tanggal_tagihan', $bulanTagihan)
+                    ->whereYear('tanggal_tagihan', $tahunTagihan)
+                    ->first();
+                if ($cekTagihan == null) {
+                    Tagihan::create($dataTagihan);
+                }
             }
         }
+        flash("Data Tagihan berhasil disimpan")->success();
+        return back();
     }
 
     /**
