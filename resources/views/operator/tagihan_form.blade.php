@@ -7,11 +7,22 @@
             <div class="card">
                 <div class="card-body">
                     {!! Form::model($model, ['route' => $route, 'method' => $method]) !!}
-                    <div class="form-group mt-1">
-                        <label for="biaya_id">Biaya Yang Ditagihkan</label>
+                    {{-- <div class="form-group mt-1">
+                        <label for="biaya_id[]">Biaya Yang Ditagihkan</label>
                         {!! Form::select('biaya_id', $biaya, null, ['class' => 'form-control', 'multiple' => true]) !!}
                         <span class="text-danger">{{ $errors->first('biaya_id') }}</span>
+                    </div> --}}
+                    @foreach ($biaya as $item)
+                    <div class="form-check mt-3">
+                        {!! Form::checkbox('biaya_id[]', $item->id, null, [
+                            'class' => 'form-check-input',
+                            'id' => 'defaultCheck' . $loop->iteration,
+                        ]) !!}
+                        <label class="form-check-label" for="defaultCheck{{ $loop->iteration }}">
+                            {{ $item->nama_biaya_full }}
+                        </label>
                     </div>
+                    @endforeach
                     <div class="form-group mt-3">
                         <label for="angkatan">Tagihan Untuk Angkatan</label>
                         {!! Form::select('angkatan', $angkatan, null, ['class' => 'form-control', 'placeholder' => 'Pilih Angkatan']) !!}
