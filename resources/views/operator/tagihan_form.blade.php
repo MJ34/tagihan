@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row justify-content-center">
-        <h4 class="fw-bold py-1 mb-4"><span class="text-muted fw-light"> Data Tagihan / </span> {{ $title }}</h4>
+        <h4 class="fw-bold py-1 mb-4"><span class="text-muted fw-light"> <a href="{{ route('tagihan.index') }}">Data Tagihan</a> / </span> {{ $title }}</h4>
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">

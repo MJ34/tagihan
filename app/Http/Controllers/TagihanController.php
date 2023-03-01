@@ -66,7 +66,37 @@ class TagihanController extends Controller
      */
     public function store(StoreTagihanRequest $request)
     {
-        //
+        //1. lakukan validasi
+        $requestData = $request->validated();
+        //2. ambil data biaya yang ditagihkan
+        $biayaIdArray = $requestData['biaya_id'];
+        //3. ambil data siswa yang ditagih berdasarkan kelas atau berdasarkan angkatan
+        $siswa = Siswa::query();
+        if ($requestData['kelas'] != '') {
+            $siswa->where('kelas', $requestData['kelas']);
+        }
+        if ($requestData['angkatan'] != '') {
+            $siswa->where('angkatan', $requestData['angkatan']);
+        }
+        $siswa = $siswa->get();
+        foreach ($siswa as $item) {
+            $itemSiswa = $item;
+            $biaya = Biaya::whereIn('id', $biayaIdArray)->get();
+            foreach ($biaya as $itemBiaya) {
+                $dataTagihan = [
+                    'siswa_id' => $itemSiswa->id,
+                    'angkatan' => $requestData['angkatan'],
+                    'kelas' => $requestData['kelas'],
+                    'tanggal_tagihan' => $requestData['tanggal_tagihan'],
+                    'tanggal_jatuh_tempo' => $requestData['tanggal_jatuh_tempo'],
+                    'nama_biaya' => $itemBiaya->nama,
+                    'jumlah_biaya' => $itemBiaya->jumlah,
+                    'keterangan' => $requestData['keterangan'],
+                    'status' => 'baru'
+                ];
+                dd($dataTagihan);
+            }
+        }
     }
 
     /**
