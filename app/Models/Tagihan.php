@@ -15,6 +15,7 @@ class Tagihan extends Model
     use SearchableTrait;
 
     protected $guarded = [];
+    protected $dates = ['tanggal_tagihan', 'tanggal_jatuh_tempo'];
     protected $searchable = [
         'columns' => [
             'nama_biaya' => '10'
