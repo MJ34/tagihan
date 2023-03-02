@@ -6,7 +6,7 @@
             <div class="card">
                 <h5 class="card-header">DATA TAGIHAN SPP SISWA {{ strtoupper($periode) }}</h5>
                 <div class="card-body">
-                    <table class="table table-sm">
+                    <table class="table table-sm table-bordered">
                     <tr>
                         <td rowspan="8" width="50">
                             <img src="{{ \Storage::url($siswa->foto) }}" alt="{{ $siswa->nama }}" width="100">
@@ -28,10 +28,28 @@
     <div class="row mt-2">
         <div class="col-md-5">
             <div class="card">
-                <h5 class="card-header">DATA TAGIHAN</h5>
+                <h5 class="card-header">DATA TAGIHAN {{ $periode }}</h5>
                 <div class="card-body">
-                    Data Tagihan
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Tagihan</th>
+                                <th>Jumlah Tagihan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($tagihan->tagihanDetails as $item)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->nama_biaya }}</td>
+                                <td>{{ formatRupiah($item->jumlah_biaya) }}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
+                <h5 class="card-header">DATA PEMBAYARAN</h5>
             </div>
         </div>
         <div class="col-md-7">
