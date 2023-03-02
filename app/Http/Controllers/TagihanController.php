@@ -15,6 +15,7 @@ class TagihanController extends Controller
     private $viewIndex = 'tagihan_index';
     private $viewCreate = 'tagihan_form';
     private $viewEdit = 'tagihan_form';
+    private $viewShow = 'tagihan_show';
     private $routePrefix = 'tagihan';
     private $accessClass = 'Data Tagihan';
     /**
@@ -128,6 +129,10 @@ class TagihanController extends Controller
         ->whereMonth('tanggal_tagihan', $request->bulan)
         ->whereYear('tanggal_tagihan', $request->tahun)
         ->get();
+        $data['tagihan'] = $tagihan;
+        $data['siswa'] = $tagihan->first()->siswa;
+        $data['periode'] = Carbon::parse($tagihan->first()->tanggal_tagihan)->translatedFormat('F Y');
+        return view('operator.' . $this->viewShow, $data);
     }
 
     /**
