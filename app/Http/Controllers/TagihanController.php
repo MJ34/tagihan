@@ -24,10 +24,13 @@ class TagihanController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->filled('q')) {
-            $models = Tagihan::with('user', 'siswa')->search($request->q)->paginate(10);
+        if ($request->filled('bulan') && $request->filled('tahun')) {
+            $models = Tagihan::with('user', 'siswa')->groupBy('siswa_id')->latest()
+            ->whereMonth('tanggal_tagihan', $request->bulan)
+            ->whereYear('tanggal_tagihan', $request->tahun)
+            ->paginate(10);
         } else {
-            $models = Tagihan::with('user', 'siswa')->latest()->paginate(10);
+            $models = Tagihan::with('user', 'siswa')->groupBy('siswa_id')->latest()->paginate(10);
         }
 
         return view('operator.' . $this->viewIndex, [

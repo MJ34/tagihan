@@ -6,13 +6,22 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary btn-sm mb-4"><i class="fa fa-add"></i>&emsp;Tambah {{ $title }}</a>
-                    {!! Form::open(['route' => $routePrefix . '.index', 'method' => 'GET']) !!}
-                        <div class="input-group">
-                            <input name="q" type="text" class="form-control" placeholder="Cari Nama Siswa" aria-label="nama siswa" aria-describedby="button-addon2" value="{{ request('q') }}">
-                            <button class="btn btn-outline-primary" type="submit" id="button-addon2"><i class="bx bx-search"></i></button>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="{{ route($routePrefix . '.create') }}" class="btn btn-primary btn-sm mb-4"><i
+                                    class="fa fa-add"></i>&emsp;Tambah {{ $title }}</a>
                         </div>
-                    {!! Form::close() !!}
+                        <div class="col-md-8">
+                            {!! Form::open(['route' => $routePrefix . '.index', 'method' => 'GET']) !!}
+                            <div class="input-group">
+                                <input name="q" type="text" class="form-control" placeholder="Cari Nama Siswa"
+                                    aria-label="nama siswa" aria-describedby="button-addon2" value="{{ request('q') }}">
+                                <button class="btn btn-outline-primary" type="submit" id="button-addon2"><i
+                                        class="bx bx-search"></i></button>
+                            </div>
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-striped mb-4">
                             <thead>
@@ -33,7 +42,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $item->nama }}</td>
-                                        @if ($item->wali->name == "Belum ada wali murid")
+                                        @if ($item->wali->name == 'Belum ada wali murid')
                                             <td style="color: red"><b>{{ $item->wali->name }}</b></td>
                                         @else
                                             <td>{{ $item->wali->name }}</td>

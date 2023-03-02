@@ -2,8 +2,7 @@
 
 @section('content')
     <div class="row justify-content-center">
-        <h4 class="fw-bold py-1 mb-4"><span class="text-muted fw-light"> {{ $access_menu }} / </span>{{ $title }}</h4>
-        <div class="col-md-12">
+        <h4 class="fw-bold py-1 mb-4"><span class="text-muted fw-light"><a href="{{ route('wali.index') }}">Data Wali</a> / </span>{{ $title }}</h4>        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     {!! Form::model($model, ['route' => $route, 'method' => $method]) !!}
