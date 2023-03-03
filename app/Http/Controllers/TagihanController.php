@@ -6,6 +6,7 @@ use App\Models\Tagihan;
 use App\Http\Requests\StoreTagihanRequest;
 use App\Http\Requests\UpdateTagihanRequest;
 use App\Models\Biaya;
+use App\Models\Pembayaran;
 use App\Models\Siswa;
 use App\Models\TagihanDetail;
 use Carbon\Carbon;
@@ -121,6 +122,7 @@ class TagihanController extends Controller
         $data['tagihan'] = $tagihan;
         $data['siswa'] = $tagihan->siswa;
         $data['periode'] = Carbon::parse($tagihan->tanggal_tagihan)->translatedFormat('F Y');
+        $data['model'] = new Pembayaran();
         return view('operator.' . $this->viewShow, $data);
     }
 
