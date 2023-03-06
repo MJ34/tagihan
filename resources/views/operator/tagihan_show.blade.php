@@ -21,7 +21,8 @@
                             <td>: {{ $siswa->nama }}</td>
                         </tr>
                     </table>
-                    <a href="" class="btn btn-primary btn-sm" target="blank"><i class="fa fa-file"></i> Kartu Tagihan
+                    <a href="{{ route('kartuspp.index', ['siswa_id' => $siswa->id, 'tahun' => request('tahun')]) }}"
+                        class="btn btn-primary btn-sm" target="blank"><i class="fa fa-file"></i> Kartu Tagihan
                         {{ request('tahun') }}</a>
                 </div>
             </div>
