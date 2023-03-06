@@ -6,10 +6,10 @@
             <div class="card">
                 <h5 class="card-header">DATA TAGIHAN SPP SISWA {{ strtoupper($periode) }}</h5>
                 <div class="card-body">
-                    <table class="table table-sm table-bordered">
+                    <table class="table table-sm table-bordered pb-1">
                         <tr>
                             <td rowspan="8" width="50">
-                                <img src="{{ \Storage::url($siswa->foto) }}" alt="{{ $siswa->nama }}" width="100">
+                                <img src="{{ \Storage::url($siswa->foto) }}" alt="{{ $siswa->nama }}" width="150">
                             </td>
                         </tr>
                         <tr>
@@ -21,6 +21,8 @@
                             <td>: {{ $siswa->nama }}</td>
                         </tr>
                     </table>
+                    <a href="" class="btn btn-primary btn-sm" target="blank"><i class="fa fa-file"></i> Kartu Tagihan
+                        {{ request('tahun') }}</a>
                 </div>
             </div>
         </div>
@@ -28,7 +30,7 @@
     <div class="row mt-2">
         <div class="col-md-5">
             <div class="card">
-                <h5 class="card-header pb-1">DATA TAGIHAN {{ strtoupper($periode )}}</h5>
+                <h5 class="card-header pb-1">DATA TAGIHAN {{ strtoupper($periode) }}</h5>
                 <div class="card-body">
                     <table class="table table-sm table-bordered">
                         <thead>
@@ -50,11 +52,18 @@
                         <tfoot>
                             <tr>
                                 <td colspan="2">Total Pembayaran</td>
-                                <td>Rp. {{ ($tagihan->tagihanDetails->sum('jumlah_biaya')) }}</td>
+                                <td>Rp. {{ $tagihan->tagihanDetails->sum('jumlah_biaya') }}</td>
                             </tr>
                         </tfoot>
                     </table>
-                    <h5 class="card-header pb-1 px-0">DATA PEMBAYARAN</h5>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="card">
+                <h5 class="card-header pb-1">DATA PEMBAYARAN</h5>
+                <div class="card-body">
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
@@ -66,21 +75,21 @@
                         </thead>
                         <tbody>
                             @foreach ($tagihan->pembayaran as $item)
-                            <tr>
-                                <td>
-                                    <a href="{{ route('kwitansipembayaran.show', $item->id) }}" target="blank"><i class="fa fa-print"></i></a>
-                                </td>
-                                <td>{{ $item->tanggal_bayar->translatedFormat('d/m/Y') }}</td>
-                                <td>{{ formatRupiah($item->jumlah_dibayar) }}</td>
-                                <td>{{ $item->metode_pembayaran }}</td>
-                            </tr>
+                                <tr>
+                                    <td>
+                                        <a href="{{ route('kwitansipembayaran.show', $item->id) }}" target="blank"><i
+                                                class="fa fa-print"></i></a>
+                                    </td>
+                                    <td>{{ $item->tanggal_bayar->translatedFormat('d/m/Y') }}</td>
+                                    <td>{{ formatRupiah($item->jumlah_dibayar) }}</td>
+                                    <td>{{ $item->metode_pembayaran }}</td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
-
                     <h5>Status Pembayaran : {{ strtoupper($tagihan->status) }} </h5>
                 </div>
-                <h5 class="card-header">FORM PEMBAYARAN</h5>
+                <h5 class="card-header pb-1">FORM PEMBAYARAN</h5>
                 <div class="card-body">
                     {!! Form::model($model, ['route' => 'pembayaran.store', 'method' => 'POST']) !!}
                     {!! Form::hidden('tagihan_id', $tagihan->id, []) !!}
@@ -98,14 +107,6 @@
                     </div>
                     {!! Form::submit('SIMPAN', ['class' => 'btn btn-primary mt-3']) !!}
                     {!! Form::close() !!}
-                </div>
-            </div>
-        </div>
-        <div class="col-md-7">
-            <div class="card">
-                <h5 class="card-header">KARTU SPP</h5>
-                <div class="card-body">
-                    Kartu SPP
                 </div>
             </div>
         </div>
