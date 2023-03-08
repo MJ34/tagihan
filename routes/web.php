@@ -12,6 +12,7 @@ use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaliController;
+use App\Http\Controllers\WaliMuridSiswaController;
 use App\Http\Controllers\WaliSiswaController;
 
 /*
@@ -39,9 +40,10 @@ Route::prefix('operator')->middleware(['auth', 'auth.operator'])->group(function
     Route::get('kartuspp', [KartuSppController::class, 'index'])->name('kartuspp.index');
 });
 
-Route::prefix('wali')->middleware(['auth', 'auth.wali'])->group(function () {
+Route::prefix('walimurid')->middleware(['auth', 'auth.wali'])->name('wali.')->group(function () {
     //ini route khusus untuk wali-murid
-    Route::get('beranda', [BerandaWaliController::class, 'index'])->name('wali.beranda');
+    Route::get('beranda', [BerandaWaliController::class, 'index'])->name('beranda');
+    Route::resource('siswa', WaliMuridSiswaController::class);
 });
 
 Route::prefix('admin')->middleware(['auth', 'auth.admin'])->group(function () {
