@@ -11,8 +11,8 @@ class WaliMuridTagihanController extends Controller
     public function index()
     {
         $siswaId = Auth::user()->siswa->pluck('id');
-        $tagihan = Tagihan::whereIn('siswa_id', $siswaId)->get();
+        $data['models'] = Tagihan::whereIn('siswa_id', $siswaId)->get();
 
-        return view('');
+        return view('wali.tagihan_index', $data);
     }
 }
