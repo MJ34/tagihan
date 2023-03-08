@@ -13,6 +13,7 @@ use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaliController;
 use App\Http\Controllers\WaliMuridSiswaController;
+use App\Http\Controllers\WaliMuridTagihanController;
 use App\Http\Controllers\WaliSiswaController;
 
 /*
@@ -44,6 +45,7 @@ Route::prefix('walimurid')->middleware(['auth', 'auth.wali'])->name('wali.')->gr
     //ini route khusus untuk wali-murid
     Route::get('beranda', [BerandaWaliController::class, 'index'])->name('beranda');
     Route::resource('siswa', WaliMuridSiswaController::class);
+    Route::resource('tagihan', WaliMuridTagihanController::class);
 });
 
 Route::prefix('admin')->middleware(['auth', 'auth.admin'])->group(function () {
