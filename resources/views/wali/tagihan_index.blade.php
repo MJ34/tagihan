@@ -37,7 +37,11 @@
                                         <td>{{ $item->tanggal_jatuh_tempo->translatedFormat('l d-M-Y') }}</td>
                                         <td>{{ $item->getStatusTagihanWali() }}</td>
                                         <td style="text-align:center">
-
+                                            @if ($item->status == 'baru' || $item->status == 'angsur')
+                                            <a href="" class="btn btn-primary">Lakukan Pembayaran</a>
+                                            @else
+                                            <a href="#" class="btn btn-success">Pembayaran Sudah Lunas</a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty
