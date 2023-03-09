@@ -15,4 +15,12 @@ class WaliMuridTagihanController extends Controller
 
         return view('wali.tagihan_index', $data);
     }
+
+    public function show($id)
+    {
+        $tagihan = Tagihan::find($id);
+        $data['tagihan'] = $tagihan;
+        $data['siswa'] = $tagihan->siswa;
+        return view('wali.tagihan_show', $data);
+    }
 }

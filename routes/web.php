@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BankSekolahController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BerandaWaliController;
@@ -34,6 +35,7 @@ Route::prefix('operator')->middleware(['auth', 'auth.operator'])->group(function
     Route::resource('wali', WaliController::class);
     Route::resource('siswa', SiswaController::class);
     Route::resource('walisiswa', WaliSiswaController::class);
+    Route::resource('bank', BankSekolahController::class);
     Route::resource('biaya', BiayaController::class);
     Route::resource('tagihan', TagihanController::class);
     Route::resource('pembayaran', PembayaranController::class);
