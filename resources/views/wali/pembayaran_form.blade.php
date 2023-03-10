@@ -1,5 +1,15 @@
 @extends('layouts.app_sneat_wali')
+@section('js')
+<script>
+    $(document).ready(function() {
+        $("#pilih_bank").change(function(e) {
+            var bankId = $(this).find(":selected").val();
+            window.location.href = "{!! $url !!}&bank_sekolah_id=" + bankId;
 
+        });
+    });
+</script>
+@endsection
 @section('content')
     <div class="row justify-content-center">
         <h4 class="fw-bold py-1 mb-4">KONFIRMASI PEMBAYARAN</h4>
@@ -12,6 +22,7 @@
                         {!! Form::select('bank_id', $listBank, request('bank_sekolah_id'), [
                             'class' => 'form-control',
                             'placeholder' => 'Pilih Bank Tujuan Transfer',
+                            'id' => 'pilih_bank',
                         ]) !!}
                         <span class="text-danger">{{ $errors->first('bank_id') }}</span>
                     </div>
