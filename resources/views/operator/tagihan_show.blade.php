@@ -9,7 +9,7 @@
                     <table class="table table-sm table-bordered pb-1">
                         <tr>
                             <td rowspan="8" width="50">
-                                <img src="{{ \Storage::url($siswa->foto) }}" alt="{{ $siswa->nama }}" width="150">
+                                <img src="{{ \Storage::url($model->foto ?? 'images/no-image.jpg') }}" alt="{{ $siswa->nama }}" width="150">
                             </td>
                         </tr>
                         <tr>
