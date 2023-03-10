@@ -19,7 +19,8 @@ class WaliMuridTagihanController extends Controller
 
     public function show($id)
     {
-        $tagihan = Tagihan::find($id);
+        $siswaId = Auth::user()->siswa->pluck('id');
+        $tagihan = Tagihan::whereIn('siswa_id', $siswaId)->findOrFail($id);
         $data['bankSekolah'] = BankSekolah::all();
         $data['tagihan'] = $tagihan;
         $data['siswa'] = $tagihan->siswa;
