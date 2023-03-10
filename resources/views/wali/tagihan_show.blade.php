@@ -57,7 +57,8 @@
                                     <td>: {{ $tagihan->getStatusTagihanWali() }}</td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"><a href="" target="blank"><i class="fa fa-file-pdf"></i> Cetak Invoice
+                                    <td colspan="2"><a href="" target="blank"><i class="fa fa-file-pdf"></i> Cetak
+                                            Invoice
                                             Tagihan</a></td>
                                 </tr>
                             </table>
@@ -123,7 +124,11 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <a href="" class="btn btn-primary btn-sm mt-3">Konfirmasi Pembayaran</a>
+                                    <a href="{{ route('wali.pembayaran.create', [
+                                        'tagihan_id' => $tagihan->id,
+                                         'bank_sekolah_id' => $itemBank->id,
+                                         ]) }}"
+                                        class="btn btn-primary btn-sm mt-3">Konfirmasi Pembayaran</a>
                                 </div>
                             </div>
                         @endforeach
