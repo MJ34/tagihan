@@ -27,7 +27,7 @@
                         <span class="text-danger">{{ $errors->first('bank_id') }}</span>
                     </div>
                     @if (request('bank_sekolah_id') != '')
-                        <div class="alert alert-primary mt-2 mb-2" role="alert">
+                        <div class="alert alert-dark mt-2 mb-2" role="alert">
                             <table width="100%">
                                 <tbody>
                                     <tr>

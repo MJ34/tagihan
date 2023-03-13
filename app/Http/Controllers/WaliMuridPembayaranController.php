@@ -11,8 +11,7 @@ class WaliMuridPembayaranController extends Controller
 {
     public function create(Request $request)
     {
-        $data['tagihan'] = Tagihan::where('id', $request->tagihan_id)->first();
-        // $data['bankSekolah'] = BankSekolah::findOrFail($request->bank_sekolah_id);
+        $data['tagihan'] = Tagihan::waliSiswa()->findOrFail($request->tagihan_id);
         $data['model'] = new Pembayaran();
         $data['method'] = 'POST';
         $data['route'] = 'wali.pembayaran.store';
