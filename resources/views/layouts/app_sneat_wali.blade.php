@@ -53,6 +53,23 @@
 
     <script src="{{ asset('sneat') }}/assets/js/config.js"></script>
 
+    <style>
+        .informasi-pengirim {
+            background-color: #E8E9EB !important;
+            padding: 10px;
+        }
+
+        .informasi-bank-tujuan {
+            background-color: #EFF6FC !important;
+            padding: 10px;
+        }
+        .informasi-pembayaran {
+            background-color: #EFF6FC !important;
+            color: black;
+            padding: 10px;
+        }
+    </style>
+
   </head>
 
   <body>
