@@ -1,14 +1,14 @@
 @extends('layouts.app_sneat_wali')
 @section('js')
-<script>
-    $(document).ready(function() {
-        $("#pilih_bank").change(function(e) {
-            var bankId = $(this).find(":selected").val();
-            window.location.href = "{!! $url !!}&bank_sekolah_id=" + bankId;
+    <script>
+        $(document).ready(function() {
+            $("#pilih_bank").change(function(e) {
+                var bankId = $(this).find(":selected").val();
+                window.location.href = "{!! $url !!}&bank_sekolah_id=" + bankId;
 
+            });
         });
-    });
-</script>
+    </script>
 @endsection
 @section('content')
     <div class="row justify-content-center">
@@ -17,10 +17,13 @@
             <div class="card">
                 <div class="card-body">
                     {!! Form::model($model, ['route' => $route, 'method' => $method]) !!}
-                    <h6 class="m-0 p-1"><i class="fa fa-info-circle"></i> INFORMASI REKENING PENGIRIM</h6>
+                    <div class="divider text">
+                        <div class="divider-text"><i class="fa fa-info-circle"></i> INFORMASI REKENING PENGIRIM</div>
+                    </div>
                     <div class="informasi-pengirim">
                         <div class="alert alert-dark" role="alert">
-                            Informasi ini dibutuhkan agar operator sekolah dapat memverifikasi pembayaran yang dilakukan oleh wali murid melalui bank.
+                            Informasi ini dibutuhkan agar operator sekolah dapat memverifikasi pembayaran yang dilakukan
+                            oleh wali murid melalui bank.
                         </div>
                         <div class="form-group">
                             <label for="nama_bank_pengirim">Nama Bank Pengirim</label>
@@ -37,8 +40,16 @@
                             {!! Form::text('no_rekening_bank_pengirim', null, ['class' => 'form-control']) !!}
                             <span class="text-danger">{{ $errors->first('no_rekening_bank_pengirim') }}</span>
                         </div>
+                        <div class="form-check mt-3">
+                            {!! Form::checkbox('simpan_data_rekening', 1, true, ['class' => 'form-check-input', 'id' => 'defaultCheck3']) !!}
+                            <label class="form-check-label" for="defaultCheck3">
+                                Simpan data ini untuk memudahkan pembayaran selanjutnya.
+                            </label>
+                        </div>
                     </div>
-                    <h6 class="m-0 p-1 mt-4 mb-0 pb-1"><i class="fa fa-info-circle"></i> INFORMASI REKENING TUJUAN</h6>
+                    <div class="divider text">
+                        <div class="divider-text"><i class="fa fa-info-circle"></i>  INFORMASI REKENING TUJUAN</div>
+                    </div>
                     <div class="informasi-bank-tujuan">
                         <div class="form-group mt-0">
                             <label for="bank_id">Bank Tujuan Pembayaran</label>
@@ -70,7 +81,9 @@
                             </div>
                         @endif
                     </div>
-                    <h6 class="m-0 p-1 mt-4 mb-0 pb-1"><i class="fa fa-info-circle"></i> INFORMASI PEMBAYARAN</h6>
+                    <div class="divider text">
+                        <div class="divider-text"><i class="fa fa-info-circle"></i>  INFORMASI PEMBAYARAN</div>
+                    </div>
                     <div class="informasi-pembayaran">
                         <div class="form-group mt-3">
                             <label for="tanggal_bayar">Tanggal Bayar</label>
