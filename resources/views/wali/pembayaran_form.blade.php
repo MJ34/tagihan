@@ -1,7 +1,21 @@
 @extends('layouts.app_sneat_wali')
 @section('js')
     <script>
+        $(function() {
+            $("#checkboxtoggle").click(function() {
+                if ($(this).is(":checked")) {
+                    $("#form_bank_pengirim").fadeIn();
+                } else {
+                    $("#form_bank_pengirim").fadeOut();
+                }
+            });
+        });
         $(document).ready(function() {
+            @if (count($listWaliBank) >= 1)
+            $("#form_bank_pengirim").hide();
+            @else
+            $("#form_bank_pengirim").show();
+            @endif
             $("#pilih_bank").change(function(e) {
                 var bankId = $(this).find(":selected").val();
                 window.location.href = "{!! $url !!}&bank_sekolah_id=" + bankId;
@@ -20,7 +34,27 @@
                     <div class="divider text">
                         <div class="divider-text"><i class="fa fa-info-circle"></i> INFORMASI REKENING PENGIRIM</div>
                     </div>
-                    <div class="informasi-pengirim">
+                    @if (count($listWaliBank) >= 1)
+                    <div class="form-group">
+                        <label for="bank_id_pengirim">Nama Bank Pengirim</label>
+                        {!! Form::select('bank_id_pengirim', $listWaliBank, null, [
+                            'class' => 'form-control select2',
+                            'placeholder' => 'Pilih Nomor Rekening Pengirim',
+                        ]) !!}
+                        <span class="text-danger">{{ $errors->first('bank_id_pengirim') }}</span>
+                    </div>
+                    <div class="form-check mt-3">
+                        {!! Form::checkbox('bank_rekening_baru', 1, false, [
+                            'class' => 'form-check-input',
+                            'id' => 'checkboxtoggle',
+                        ]) !!}
+                        <label class="form-check-label" for="checkboxtoggle">
+                            Centang, Untuk menambah rekening baru
+                        </label>
+                    </div>
+                    @endif
+
+                    <div class="informasi-pengirim" id="form_bank_pengirim">
                         <div class="alert alert-dark" role="alert">
                             Informasi ini dibutuhkan agar operator sekolah dapat memverifikasi pembayaran yang dilakukan
                             oleh wali murid melalui bank.
@@ -29,6 +63,11 @@
                             <label for="nama_bank_pengirim">Nama Bank Pengirim</label>
                             {!! Form::text('nama_bank_pengirim', null, ['class' => 'form-control']) !!}
                             <span class="text-danger">{{ $errors->first('nama_bank_pengirim') }}</span>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="kode">Kode Bank Pengirim</label>
+                            {!! Form::text('kode', null, ['class' => 'form-control']) !!}
+                            <span class="text-danger">{{ $errors->first('kode') }}</span>
                         </div>
                         <div class="form-group mt-3">
                             <label for="rekening_bank_pengirim">Nama Pemilik Rekening</label>
@@ -48,7 +87,7 @@
                         </div>
                     </div>
                     <div class="divider text">
-                        <div class="divider-text"><i class="fa fa-info-circle"></i>  INFORMASI REKENING TUJUAN</div>
+                        <div class="divider-text"><i class="fa fa-info-circle"></i> INFORMASI REKENING TUJUAN</div>
                     </div>
                     <div class="informasi-bank-tujuan">
                         <div class="form-group mt-0">
@@ -82,7 +121,7 @@
                         @endif
                     </div>
                     <div class="divider text">
-                        <div class="divider-text"><i class="fa fa-info-circle"></i>  INFORMASI PEMBAYARAN</div>
+                        <div class="divider-text"><i class="fa fa-info-circle"></i> INFORMASI PEMBAYARAN</div>
                     </div>
                     <div class="informasi-pembayaran">
                         <div class="form-group mt-3">
